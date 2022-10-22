@@ -7,24 +7,46 @@
 
 using namespace std;
 
-int main()
-{
-    // First create an instance of an engine.
-    random_device rnd_device;
-    // Specify the engine and distribution.
-    mt19937 mersenne_engine {rnd_device()};  // Generates random integers
-    uniform_int_distribution<int> dist {-30, 100};
-    
-    auto gen = [&dist, &mersenne_engine](){
-                   return dist(mersenne_engine);
-               };
 
-    vector<int> vec(10);
-    generate(begin(vec), end(vec), gen);
-    
-    // Optional
-    for (auto i : vec) {
-        cout << i << " ";
+double gen_numbers() {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> distribution(-30,100);
+    return distribution(gen);
+}
+
+
+// vector <int> &create_vector(vector <int> &vec){
+//     const int size = 100;
+//     int max_elem = 100;
+//     vec.reserve(size);
+//     for (int i = 0; i < size; i++){
+//         vec.push_back(gen_numbers());
+//     }
+//     return vec;
+// }
+
+void calc(){
+    vector <int> vec;
+    const int size = 10000;
+    int max_elem = 100;
+    vec.reserve(size);
+
+     for (int i = 0; i < size; i++){
+        vec.push_back(gen_numbers());
     }
 
+    for (auto number: vec){
+        if (number < max_elem && number > 0){
+            max_elem = number;
+        }
+    }
+
+}
+
+
+int main()
+{
+    calc();
+    return 0;
 }
